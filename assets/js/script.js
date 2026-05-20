@@ -105,6 +105,19 @@ if (bookingForm) {
   const today = new Date();
   dateInput.min = today.toISOString().split('T')[0];
 
+  // Prefill service if provided in URL query params (e.g. ?service=Installation)
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('service')) {
+      const svc = decodeURIComponent(params.get('service'));
+      const opt = Array.from(serviceSelect.options).find(o => o.value.toLowerCase() === svc.toLowerCase() || o.value === svc);
+      if (opt) {
+        serviceSelect.value = opt.value;
+        setTimeout(() => { bookingForm.scrollIntoView({ behavior: 'smooth' }); }, 250);
+      }
+    }
+  } catch (e) { /* ignore malformed URLs */ }
+
   function getBookings() {
     return JSON.parse(localStorage.getItem('laraluxe_bookings') || '[]');
   }

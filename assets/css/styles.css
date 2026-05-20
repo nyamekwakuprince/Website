@@ -301,6 +301,20 @@ ul{list-style:none;}
 .gallery-item:hover .gallery-cat,
 .gallery-item:hover .gallery-item-title { transform: translateY(0); }
 
+/* Button shown on gallery overlays */
+.gallery-book-btn{
+  display:inline-block;
+  margin-top:12px;
+  padding:10px 20px;
+  background:#fff;
+  color:var(--purple-dark);
+  border-radius:40px;
+  font-weight:700;
+  text-decoration:none;
+  transition:all .2s;
+}
+.gallery-book-btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.25);}
+
 /* ===== LIGHTBOX ===== */
 .lightbox {
   position: fixed;
