@@ -2,17 +2,13 @@ import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import resend
+from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app) # Enable CORS for development ease
 
 # Load .env file automatically if present
-if os.path.exists('.env'):
-    with open('.env') as f:
-        for line in f:
-            if '=' in line and not line.strip().startswith('#'):
-                k, v = line.strip().split('=', 1)
-                os.environ[k.strip()] = v.strip().strip('"').strip("'")
+load_dotenv()
 
 # Configure Resend API Key
 resend.api_key = os.environ.get('RESEND_API_KEY')

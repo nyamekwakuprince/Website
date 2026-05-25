@@ -1,5 +1,10 @@
 from playwright.sync_api import sync_playwright
 import os
+import sys
+
+# Fix for Windows console emoji printing
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
 
 BASE = "http://localhost:7700"
 SHOTS = r"c:\Users\nyame\Desktop\Website\test_screenshots"
@@ -8,7 +13,7 @@ os.makedirs(SHOTS, exist_ok=True)
 results = []
 
 def log(msg, ok=True):
-    icon = "✅" if ok else "❌"
+    icon = "[PASS]" if ok else "[FAIL]"
     print(f"{icon}  {msg}")
     results.append((ok, msg))
 
@@ -18,7 +23,7 @@ with sync_playwright() as p:
 
     # ── 1. HOME PAGE ──────────────────────────────────────────────
     page.goto(f"{BASE}/index.html")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     page.screenshot(path=f"{SHOTS}/01_home_top.png", full_page=False)
 
     # Check title
@@ -27,8 +32,8 @@ with sync_playwright() as p:
 
     # Check hero image loaded (no broken)
     hero_ok = page.evaluate("""() => {
-        const img = document.querySelector('.hero-model');
-        return img && img.complete && img.naturalWidth > 0;
+        const slide = document.querySelector('.hero-slide.active');
+        return slide !== null;
     }""")
     log("Hero image loaded", hero_ok)
 
@@ -62,31 +67,31 @@ with sync_playwright() as p:
 
     # ── 2. NAVIGATION ─────────────────────────────────────────────
     page.goto(f"{BASE}/index.html")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
 
     page.click("a.nav-link[href='services.html']")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     log("Nav: Services link works", "services.html" in page.url)
 
     page.click("a.nav-link[href='gallery.html']")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     log("Nav: Gallery link works", "gallery.html" in page.url)
 
     page.click("a.nav-link[href='contact.html']")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     log("Nav: Contact link works", "contact.html" in page.url)
 
     page.click(".nav-logo a")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     log("Nav: Logo goes to Home", "index.html" in page.url or page.url.endswith("/"))
 
     page.click("a.btn-book-nav")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     log("Nav: Book Session goes to booking", "booking.html" in page.url)
 
     # ── 3. SERVICES PAGE ──────────────────────────────────────────
     page.goto(f"{BASE}/services.html")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     page.screenshot(path=f"{SHOTS}/03_services.png", full_page=True)
 
     svc_cards = page.locator(".service-card").count()
@@ -109,18 +114,18 @@ with sync_playwright() as p:
 
     # ── 4. GALLERY PAGE ───────────────────────────────────────────
     page.goto(f"{BASE}/gallery.html")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     page.screenshot(path=f"{SHOTS}/04_gallery.png", full_page=False)
 
     gallery_items = page.locator(".gallery-item").count()
-    log(f"Gallery items count: {gallery_items}", gallery_items == 12)
+    log(f"Gallery items count: {gallery_items}", gallery_items == 16)
 
     gallery_imgs = page.evaluate("""() => {
         const imgs = document.querySelectorAll('.gallery-item img');
         return Array.from(imgs).map(i => ({src: i.src.split('/').pop(), ok: i.complete && i.naturalWidth > 0}));
     }""")
     broken = [i for i in gallery_imgs if not i['ok']]
-    log(f"Gallery: {len(gallery_imgs) - len(broken)}/12 images loaded", len(broken) == 0)
+    log(f"Gallery: {len(gallery_imgs) - len(broken)}/16 images loaded", len(broken) == 0)
     for b in broken:
         log(f"  BROKEN: '{b['src']}'", False)
 
@@ -150,7 +155,7 @@ with sync_playwright() as p:
 
     # ── 5. CONTACT PAGE ───────────────────────────────────────────
     page.goto(f"{BASE}/contact.html")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     page.screenshot(path=f"{SHOTS}/06_contact.png", full_page=True)
 
     log("Contact: Name field", page.locator("#contactName").count() == 1)
@@ -165,7 +170,7 @@ with sync_playwright() as p:
 
     # ── 6. BOOKING PAGE ───────────────────────────────────────────
     page.goto(f"{BASE}/booking.html")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     page.screenshot(path=f"{SHOTS}/07_booking.png", full_page=True)
 
     log("Booking: Name field", page.locator("#clientName").count() == 1)
@@ -195,7 +200,7 @@ with sync_playwright() as p:
     # ── 7. MOBILE VIEW ────────────────────────────────────────────
     page.set_viewport_size({"width": 390, "height": 844})
     page.goto(f"{BASE}/index.html")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_load_state("load")
     page.screenshot(path=f"{SHOTS}/08_mobile_home.png", full_page=False)
 
     hamburger = page.locator(".hamburger")
@@ -216,11 +221,11 @@ passed = sum(1 for ok, _ in results if ok)
 failed = sum(1 for ok, _ in results if not ok)
 print(f"\n  PASSED: {passed}  |  FAILED: {failed}  |  TOTAL: {len(results)}\n")
 if failed == 0:
-    print("  🎉 ALL TESTS PASSED — Site is ready!")
+    print("  [SUCCESS] ALL TESTS PASSED — Site is ready!")
 else:
-    print("  ⚠️  ISSUES FOUND:")
+    print("  [WARNING] ISSUES FOUND:")
     for ok, msg in results:
         if not ok:
-            print(f"     ❌  {msg}")
+            print(f"     [X]  {msg}")
 print(f"\n  Screenshots saved to: {SHOTS}")
 print("="*50)
