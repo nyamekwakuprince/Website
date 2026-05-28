@@ -1,0 +1,14 @@
+{
+  "name": "laraluxe-studio",
+  "version": "1.0.0",
+  "description": "Premium Hair Studio Booking Website",
+  "private": true,
+  "scripts": {
+    "dev": "npx live-server --port=3000",
+    "lint": "npx eslint assets/js/*.js",
+    "preview": "npx http-server -p 8000"
+  },
+  "devDependencies": {},
+  "author": "Lara LuxeStudio",
+  "license": "MIT"
+}

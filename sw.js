@@ -11,6 +11,7 @@ const ASSETS_TO_CACHE = [
   './admin/index.html',
   './assets/css/styles.css',
   './assets/js/main.js',
+  './assets/js/script.js',
   './assets/js/admin.js',
   './assets/images/logo.png',
   './assets/images/hero_bg.png',

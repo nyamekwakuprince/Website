@@ -414,40 +414,99 @@ function validateForm(fields) {
 // ===== CONTACT FORM LOGIC =====
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fields = [
-      { id: 'contactName', errId: 'contactNameError', msg: 'Name is required.' },
-      { id: 'contactEmail', errId: 'contactEmailError', msg: 'Email is required.' },
-      { id: 'contactMessage', errId: 'contactMessageError', msg: 'Message is required.' }
-    ];
+  const nameInput = document.getElementById('contactName');
+  const emailInput = document.getElementById('contactEmail');
+  const messageInput = document.getElementById('contactMessage');
+  const subjectInput = document.getElementById('contactSubject');
 
-    if (!validateForm(fields)) return;
+  const nameError = document.getElementById('contactNameError');
+  const emailError = document.getElementById('contactEmailError');
+  const messageError = document.getElementById('contactMessageError');
 
-    const btn = document.getElementById('contactSubmitBtn');
-    btn.classList.add('loading');
-    btn.disabled = true;
-
-    try {
-      const response = await fetch(contactForm.action, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        alert("Message sent successfully! We will get back to you soon.");
-        contactForm.reset();
-      } else {
-        alert("Oops! There was a problem sending your message.");
-      }
-    } catch (error) {
-      alert("Error submitting the form. Please try again.");
-    } finally {
-      btn.classList.remove('loading');
-      btn.disabled = false;
+  // Real-time validation
+  nameInput.addEventListener('blur', () => validateField(nameInput, nameError, 'Name is required.'));
+  emailInput.addEventListener('blur', () => {
+    if (!emailInput.value.trim()) {
+      showError(emailInput, emailError, 'Email is required.');
+    } else if (!validateEmail(emailInput.value)) {
+      showError(emailInput, emailError, 'Enter a valid email.');
+    } else {
+      clearError(emailInput, emailError);
     }
   });
+  messageInput.addEventListener('blur', () => validateField(messageInput, messageError, 'Message is required.'));
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const isNameValid = validateField(nameInput, nameError, 'Name is required.');
+    const isEmailValid = emailInput.value.trim() && validateEmail(emailInput.value);
+    const isMessageValid = validateField(messageInput, messageError, 'Message is required.');
+
+    if (!isEmailValid) {
+      showError(emailInput, emailError, emailInput.value.trim() ? 'Enter a valid email.' : 'Email is required.');
+    }
+
+    if (!isNameValid || !isEmailValid || !isMessageValid) return;
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const subject = subjectInput.value.trim() || 'General Inquiry';
+    const message = messageInput.value.trim();
+
+    // mailto fallback link
+    const mailtoUrl = `mailto:bookings@laraluxe.studio?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+      "Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message
+    )}`;
+
+    // Show success message
+    const statusDiv = document.createElement('div');
+    statusDiv.setAttribute('role', 'alert');
+    statusDiv.style.cssText = 'padding: 16px; margin-top: 20px; border-radius: 12px; background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; color: #2A052B; font-weight: 500; font-size: 14px;';
+    statusDiv.innerHTML = `
+      <strong>Message Prepared!</strong> If your email client did not open automatically, please 
+      <a href="${mailtoUrl}" style="color: var(--purple); text-decoration: underline; font-weight: bold;">click here</a> to send.
+    `;
+    
+    contactForm.appendChild(statusDiv);
+    contactForm.reset();
+
+    // Open mailto fallback
+    window.location.href = mailtoUrl;
+
+    setTimeout(() => statusDiv.remove(), 10000);
+  });
+}
+
+// ===== VALIDATION UTILITIES =====
+function validateField(input, errorEl, msg) {
+  if (!input.value.trim()) {
+    showError(input, errorEl, msg);
+    return false;
+  }
+  clearError(input, errorEl);
+  return true;
+}
+
+function showError(input, errorEl, msg) {
+  input.style.borderColor = '#ff6b8a';
+  if (errorEl) {
+    errorEl.textContent = msg;
+    errorEl.setAttribute('role', 'alert');
+  }
+}
+
+function clearError(input, errorEl) {
+  input.style.borderColor = '';
+  if (errorEl) {
+    errorEl.textContent = '';
+    errorEl.removeAttribute('role');
+  }
+}
+
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email.toLowerCase());
 }
 
 

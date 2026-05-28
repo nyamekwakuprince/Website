@@ -7,6 +7,7 @@
   <meta name="description" content="Reserve your premium hair session at Lara LuxeStudio. Secure online payment placeholder." />
   <link rel="stylesheet" href="assets/css/styles.css" />
   <link rel="icon" href="assets/images/logo.png" type="image/png" />
+  <link rel="manifest" href="manifest.json" />
   <meta property="og:title" content="Book Your Session | Lara LuxeStudio" />
   <meta property="og:description" content="Reserve your premium hair session at Lara LuxeStudio. Secure online payment." />
   <meta property="og:image" content="assets/images/hero_bg.png" />
@@ -116,31 +117,21 @@
                   <span class="field-error" id="timeError"></span>
                 </div>
               </div>
-              
-              <div class="form-commitment">
-                <div class="commitment-card">
-                  
-                  <!-- Payment Placeholder Section -->
-                  <div class="payment-placeholder-section" style="margin-bottom: 20px; padding: 20px; background: rgba(107, 26, 110, 0.04); border: 1px dashed rgba(107, 26, 110, 0.3); border-radius: 12px; text-align: center;">
-                    <strong style="display: block; color: var(--purple-dark); margin-bottom: 8px;">💳 Payment Integration Placeholder</strong>
-                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Payment integration — connect live Paystack key here</p>
-                    
-                    <div class="tooltip-container">
-                      <button type="button" class="btn-submit btn-pay-now-disabled" disabled style="padding: 10px 24px; font-size: 14px; background: #cccccc; color: #666666; cursor: not-allowed; border: none; border-radius: 20px; font-weight: bold;">
-                        Pay Now (Disabled)
-                      </button>
-                      <span class="tooltip-text">Payment integration — connect live Paystack key here. Proceed using fallback booking below.</span>
-                    </div>
-                  </div>
 
-                  <label class="checkbox-container">
-                    <input type="checkbox" id="commitmentCheck" name="commitment_agreement" required aria-describedby="commitmentError">
-                    <span class="checkmark"></span>
-                    <span class="commitment-text">I understand this is a request fallback.</span>
-                  </label>
-                  <span class="field-error" id="commitmentError"></span>
-                </div>
-              </div>
+             <div class="form-commitment">
+               <div class="commitment-card">
+                 <div style="margin-bottom: 16px; padding: 16px; background: rgba(107, 26, 110, 0.05); border-radius: 12px; text-align: center;">
+                   <strong style="display: block; color: var(--purple-dark); margin-bottom: 4px;">GHS 100 Deposit Required</strong>
+                   <span style="font-size: 12px; color: var(--text-muted);">Secure your booking with a GHC 100 deposit (non-refundable)</span>
+                 </div>
+                 <label class="checkbox-container">
+                   <input type="checkbox" id="commitmentCheck" name="commitment_agreement" required aria-describedby="commitmentError">
+                   <span class="checkmark"></span>
+                   <span class="commitment-text">I understand the deposit is required to confirm my booking.</span>
+                 </label>
+                 <span class="field-error" id="commitmentError"></span>
+               </div>
+             </div>
               
               <button type="submit" class="btn-submit" id="submitBtn">
                 <span class="btn-text">Confirm & Book Session</span>
@@ -170,6 +161,8 @@
           <a href="services.html">Services</a>
           <a href="gallery.html">Gallery</a>
           <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
         </nav>
       </div>
       <div class="footer-bottom">
@@ -201,6 +194,9 @@
   <!-- Print-only receipt layout -->
   <div id="printReceipt" class="print-only-receipt" aria-hidden="true"></div>
 
-  <script src="assets/js/main.js"></script>
-</body>
+<!-- Paystack and jsPDF libraries -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="assets/js/script.js"></script>
+  </body>
 </html>
