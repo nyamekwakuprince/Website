@@ -78,7 +78,7 @@ with sync_playwright() as p:
     log("Nav: Gallery link works", "gallery.html" in page.url)
 
     page.click("a.nav-link[href='contact.html']")
-    page.wait_for_load_state("load")
+    page.wait_for_load_state("domcontentloaded")
     log("Nav: Contact link works", "contact.html" in page.url)
 
     page.click(".nav-logo a")
@@ -155,7 +155,7 @@ with sync_playwright() as p:
 
     # ── 5. CONTACT PAGE ───────────────────────────────────────────
     page.goto(f"{BASE}/contact.html")
-    page.wait_for_load_state("load")
+    page.wait_for_load_state("domcontentloaded")
     page.screenshot(path=f"{SHOTS}/06_contact.png", full_page=True)
 
     log("Contact: Name field", page.locator("#contactName").count() == 1)
@@ -197,7 +197,27 @@ with sync_playwright() as p:
     wa_booking = page.locator(".whatsapp-float").count()
     log("WhatsApp float on Booking page", wa_booking > 0)
 
-    # ── 7. MOBILE VIEW ────────────────────────────────────────────
+    # ── 8. ADMIN DASHBOARD ────────────────────────────────────────────────────
+    page.goto(f"{BASE}/admin/index.html")
+    page.wait_for_load_state("load")
+    log("Admin: Login section visible", page.locator("#adminLoginSection").is_visible())
+    
+    # Try invalid login
+    page.fill("#adminUsername", "wronguser")
+    page.fill("#adminPassword", "wrongpass")
+    page.click("#adminLoginForm button[type='submit']")
+    page.wait_for_timeout(500)
+    log("Admin: Invalid login shows error", page.locator("#loginError").is_visible())
+    
+    # Try valid login
+    page.fill("#adminUsername", "admin")
+    page.fill("#adminPassword", "password123")
+    page.click("#adminLoginForm button[type='submit']")
+    page.wait_for_timeout(1000)
+    log("Admin: Dashboard section visible after login", page.locator("#adminDashboardSection").is_visible())
+    log("Admin: Bookings table present", page.locator("#bookingsTableBody").is_visible())
+
+    # ── 9. MOBILE VIEW ────────────────────────────────────────────
     page.set_viewport_size({"width": 390, "height": 844})
     page.goto(f"{BASE}/index.html")
     page.wait_for_load_state("load")

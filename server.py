@@ -1,10 +1,34 @@
 import os
+import sqlite3
+import datetime
+import uuid
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import resend
 from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder='.', static_url_path='')
+
+def init_db():
+    conn = sqlite3.connect('bookings.db')
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS bookings (
+            id TEXT PRIMARY KEY,
+            client_name TEXT,
+            client_email TEXT,
+            client_phone TEXT,
+            service_type TEXT,
+            booking_date TEXT,
+            booking_time TEXT,
+            deposit_paid TEXT,
+            created_at TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+init_db()
 CORS(app) # Enable CORS for development ease
 
 # Load .env file automatically if present
@@ -30,6 +54,22 @@ def send_email():
         service_type = request.form.get('serviceType', 'Hair Styling Session')
         booking_date = request.form.get('bookingDate', '')
         booking_time = request.form.get('bookingTime', '')
+        client_phone = request.form.get('clientPhone', '')
+
+        # Save to database
+        try:
+            conn = sqlite3.connect('bookings.db')
+            c = conn.cursor()
+            booking_id = str(uuid.uuid4())
+            created_at = datetime.datetime.now().isoformat()
+            c.execute('''
+                INSERT INTO bookings (id, client_name, client_email, client_phone, service_type, booking_date, booking_time, deposit_paid, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (booking_id, client_name, client_email, client_phone, service_type, booking_date, booking_time, "GHC 100.00", created_at))
+            conn.commit()
+            conn.close()
+        except Exception as db_e:
+            print("Database Error:", db_e)
         
         if not client_email:
             return jsonify({'success': False, 'message': 'Client email is required'}), 400
@@ -114,6 +154,48 @@ def send_email():
         print("Resend Error:", e)
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    
+    admin_user = os.environ.get('ADMIN_USER', 'admin')
+    admin_pass = os.environ.get('ADMIN_PASS', 'password123')
+    
+    if username == admin_user and password == admin_pass:
+        # In a real app, use JWT. Here, a simple token string is enough.
+        token = "secret-admin-token-" + str(uuid.uuid4())
+        return jsonify({'success': True, 'token': token})
+    else:
+        return jsonify({'success': False, 'message': 'Invalid credentials'}), 401
+
+@app.route('/api/admin/bookings', methods=['GET'])
+def get_bookings():
+    auth_header = request.headers.get('Authorization')
+    if not auth_header or not auth_header.startswith('Bearer secret-admin-token-'):
+        return jsonify({'success': False, 'message': 'Unauthorized'}), 401
+        
+    try:
+        conn = sqlite3.connect('bookings.db')
+        conn.row_factory = sqlite3.Row
+        c = conn.cursor()
+        c.execute('SELECT * FROM bookings ORDER BY created_at DESC')
+        rows = c.fetchall()
+        conn.close()
+        
+        bookings = [dict(ix) for ix in rows]
+        return jsonify({'success': True, 'data': bookings})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@app.after_request
+def add_robots_header(response):
+    if request.path.startswith('/admin/'):
+        response.headers['X-Robots-Tag'] = 'noindex, nofollow'
+    return response
+
 if __name__ == '__main__':
     # Default to port 7700 to match the user's dev environment setup
-    app.run(host='0.0.0.0', port=7700, debug=True)
+    app.run(host='0.0.0.0', port=7700, debug=True, threaded=True)
+
