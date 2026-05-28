@@ -1,3 +1,61 @@
+/* ===== SELF-HOSTED FONTS ===== */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/Inter-300.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Inter-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/Inter-500.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/Inter-600.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/PlayfairDisplay-Italic-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/PlayfairDisplay-Normal-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/PlayfairDisplay-Normal-600.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/PlayfairDisplay-Normal-700.ttf') format('truetype');
+}
+
 /* ===== ROOT & RESET ===== */
 :root {
   --purple: #6B1A6E;
@@ -592,4 +650,153 @@ ul{list-style:none;}
   .testimonials-track{grid-template-columns:1fr;}
   .form-row{grid-template-columns:1fr;}
   .footer-bottom{flex-direction:column;text-align:center;}
+}
+
+/* ===== TOOLTIP & PLACEHOLDER STYLING ===== */
+.tooltip-container {
+  display: inline-block;
+  position: relative;
+}
+.tooltip-container .tooltip-text {
+  visibility: hidden;
+  width: 220px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  line-height: 1.4;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  font-family: 'Inter', sans-serif;
+  font-weight: normal;
+}
+.tooltip-container .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ===== PRINT RECEIPT STYLING ===== */
+.print-only-receipt {
+  display: none;
+}
+
+@media print {
+  body > * {
+    display: none !important;
+  }
+  .print-only-receipt {
+    display: block !important;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #fff;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+  }
+  .receipt-header {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  .receipt-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #3D0F3C;
+    margin-bottom: 5px;
+  }
+  .receipt-header p {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .receipt-body {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  .receipt-col {
+    width: 48%;
+  }
+  .receipt-col h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .receipt-col p {
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+  }
+  .receipt-table th {
+    background: #000;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .receipt-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+  }
+  .receipt-totals {
+    float: right;
+    width: 250px;
+    margin-bottom: 30px;
+  }
+  .receipt-totals table {
+    width: 100%;
+  }
+  .receipt-totals td {
+    padding: 6px 0;
+    font-size: 14px;
+  }
+  .receipt-totals tr.grand-total td {
+    font-size: 16px;
+    font-weight: bold;
+    color: #6B1A6E;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+  }
+  .receipt-footer {
+    clear: both;
+    text-align: center;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 50px;
+    font-size: 11px;
+    color: #999;
+  }
 }

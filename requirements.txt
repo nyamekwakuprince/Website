@@ -1,5 +1,0 @@
-Flask
-Flask-Cors
-resend
-playwright
-python-dotenv
