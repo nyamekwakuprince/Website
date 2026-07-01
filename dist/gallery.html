@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Lara LuxeStudio</title>
+  <meta name="description" content="View our portfolio of stunning hair transformations at Lara LuxeStudio." />
+  <link rel="icon" href="/assets/logo-Co-Xh_kR.png" type="image/png" />
+  <link rel="manifest" href="/assets/manifest-BHVXYMm3.json" />
+  <meta property="og:title" content="Gallery | Lara LuxeStudio" />
+  <meta property="og:description" content="View our portfolio of stunning hair transformations at Lara LuxeStudio." />
+  <meta property="og:image" content="assets/images/hero_bg.png" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" crossorigin href="/assets/styles-DzEHzinu.css">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar scrolled" id="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="index.html" style="display: flex; align-items: center; gap: 10px;">
+          <img src="/assets/logo-Co-Xh_kR.png" alt="Lara LuxeStudio Logo" class="logo-img" />
+          <div class="logo-text">
+            <span class="logo-name">LARA</span>
+            <span class="logo-studio">LUXESTUDIO</span>
+          </div>
+        </a>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="gallery.html" class="nav-link active" aria-current="page">Gallery</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <a href="booking.html" class="btn-book-nav">Book Session</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE HEADER ===== -->
+  <header class="page-header">
+    <div class="container">
+      <h1 class="reveal">The Lara Luxe Look</h1>
+      <p class="reveal">A collection of masterpieces crafted with precision and love.</p>
+    </div>
+  </header>
+
+  <!-- ===== GALLERY SECTION ===== -->
+  <main>
+    <section class="gallery-section" style="background: var(--bg); padding: 40px 0 100px;" aria-label="Hair Transformation Gallery">
+      <div class="container">
+        
+        <!-- Gallery Filters -->
+        <div class="gallery-filters reveal" role="tablist" aria-label="Filter portfolio by service type">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter-btn" data-filter="installation" role="tab" aria-selected="false">Installation</button>
+          <button class="filter-btn" data-filter="curling" role="tab" aria-selected="false">Curling</button>
+          <button class="filter-btn" data-filter="braids" role="tab" aria-selected="false">Braids</button>
+          <button class="filter-btn" data-filter="revamping" role="tab" aria-selected="false">Revamping</button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+
+          <!-- INSTALLATION (4) -->
+          <div class="gallery-item reveal" data-category="installation" onclick="openLightbox(0)" role="button" aria-label="View Sleek Luxe Look installation detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/installation_1--Ze0KvQc.jfif" alt="Sleek lace front wig installation styling profile">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Installation</span>
+                  <h4 class="gallery-item-title">The Sleek Luxe Look</h4>
+                  <a href="booking.html?service=Installation" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="installation" onclick="openLightbox(1)" role="button" aria-label="View Frontal Masterpiece installation detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/installation_2-3dqOVn80.jfif" alt="Flawless frontal wig installation styling front view">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Installation</span>
+                  <h4 class="gallery-item-title">Frontal Masterpiece</h4>
+                  <a href="booking.html?service=Installation" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="installation" onclick="openLightbox(2)" role="button" aria-label="View HD Lace Perfection installation detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/installation_3-D9UB_WEG.jfif" alt="Perfect HD lace blend wig installation close up">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Installation</span>
+                  <h4 class="gallery-item-title">HD Lace Perfection</h4>
+                  <a href="booking.html?service=Installation" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="installation" onclick="openLightbox(3)" role="button" aria-label="View Natural Hairline installation detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/installation_4-D_O5-MHL.jfif" alt="Natural hairline wig installation styling detail">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Installation</span>
+                  <h4 class="gallery-item-title">Natural Hairline</h4>
+                  <a href="booking.html?service=Installation" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- CURLING (4) -->
+          <div class="gallery-item reveal" data-category="curling" onclick="openLightbox(4)" role="button" aria-label="View Bouncy Curls detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/curling_1-DRpRl9Jp.jfif" alt="Elegant bouncy curls hair styling transformation">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Curling</span>
+                  <h4 class="gallery-item-title">Bouncy Curls</h4>
+                  <a href="booking.html?service=Curling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="curling" onclick="openLightbox(5)" role="button" aria-label="View Defined Ringlets detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/curling_2-DXqBogbl.jfif" alt="Defined ringlets tight curls styling back view">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Curling</span>
+                  <h4 class="gallery-item-title">Defined Ringlets</h4>
+                  <a href="booking.html?service=Curling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="curling" onclick="openLightbox(6)" role="button" aria-label="View Loose Waves detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/curling_3-DfB8QPDV.jfif" alt="Loose waves soft curls hair styling front view">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Curling</span>
+                  <h4 class="gallery-item-title">Loose Waves</h4>
+                  <a href="booking.html?service=Curling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="curling" onclick="openLightbox(7)" role="button" aria-label="View Hollywood Glam Waves detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/curling_4-BEajZ18U.jfif" alt="Hollywood glam waves premium curls styling profile">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Curling</span>
+                  <h4 class="gallery-item-title">Hollywood Glam Waves</h4>
+                  <a href="booking.html?service=Curling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- BRAIDS (4) -->
+          <div class="gallery-item reveal" data-category="braids" onclick="openLightbox(8)" role="button" aria-label="View Knotless Perfection detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/braid_1-DECBPtkq.jfif" alt="Knotless braids neat custom hair braiding style">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Braids</span>
+                  <h4 class="gallery-item-title">Knotless Perfection</h4>
+                  <a href="booking.html?service=Styling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="braids" onclick="openLightbox(9)" role="button" aria-label="View Classic Box Braids detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/braid_2-cn8GBw_Y.jfif" alt="Classic box braids neat parting hair styling">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Braids</span>
+                  <h4 class="gallery-item-title">Classic Box Braids</h4>
+                  <a href="booking.html?service=Styling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="braids" onclick="openLightbox(10)" role="button" aria-label="View Intricate Cornrows detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/braid_3-C-O_cnlZ.jfif" alt="Intricate cornrows patterns hair braiding close up">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Braids</span>
+                  <h4 class="gallery-item-title">Intricate Cornrows</h4>
+                  <a href="booking.html?service=Styling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="braids" onclick="openLightbox(11)" role="button" aria-label="View Ghana Braids detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/braid_4-Cfjs-tLl.jfif" alt="Ghana braids elegant hair braiding detail view">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Braids</span>
+                  <h4 class="gallery-item-title">Ghana Braids</h4>
+                  <a href="booking.html?service=Styling" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- REVAMPING (4) -->
+          <div class="gallery-item reveal" data-category="revamping" onclick="openLightbox(12)" role="button" aria-label="View Revival Process detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/revamping_1-DBL-ecBB.jfif" alt="Wig revamping revival deep wash restoration process">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Revamping</span>
+                  <h4 class="gallery-item-title">The Revival Process</h4>
+                  <a href="booking.html?service=Revamping" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="revamping" onclick="openLightbox(13)" role="button" aria-label="View Color Revamp detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/revamping_2-D9OEa7AG.jfif" alt="Color revamp restoration wig coloring styling detail">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Revamping</span>
+                  <h4 class="gallery-item-title">Color Revamp</h4>
+                  <a href="booking.html?service=Revamping" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="revamping" onclick="openLightbox(14)" role="button" aria-label="View Full Restoration detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/revamping_3-DCHFgzby.jfif" alt="Full restoration wig styling deep condition shine refresh">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Revamping</span>
+                  <h4 class="gallery-item-title">Full Restoration</h4>
+                  <a href="booking.html?service=Revamping" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="revamping" onclick="openLightbox(15)" role="button" aria-label="View Style Refresh detail">
+            <div class="gallery-img-wrap">
+              <img src="/assets/revamping_4-BkFAQmj2.jfif" alt="Style refresh cut, styling and curl restoration for custom wig">
+              <div class="gallery-item-overlay">
+                  <span class="gallery-cat">Revamping</span>
+                  <h4 class="gallery-item-title">Style Refresh</h4>
+                  <a href="booking.html?service=Revamping" class="gallery-book-btn" onclick="event.stopPropagation()">Book Session</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image Gallery Lightbox">
+    <span class="close-lightbox" tabindex="0" aria-label="Close Lightbox" role="button">&times;</span>
+    <img id="lightbox-img" src="" alt="Full size view of selected portfolio transformation">
+    <div id="lightbox-caption"></div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="/assets/logo-Co-Xh_kR.png" alt="Lara LuxeStudio Logo" class="logo-img" style="height: 32px;" />
+          <div class="logo-text">
+            <span class="logo-name">LARA</span>
+            <span class="logo-studio">LUXESTUDIO</span>
+          </div>
+        </div>
+        <p class="footer-tagline">Where Beauty Meets Luxury ✦</p>
+        <nav class="footer-links" aria-label="Footer Quick Links">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Lara LuxeStudio. All rights reserved.</p>
+        <a href="tel:+233595699259" class="footer-phone" aria-label="Call us">+233 59 569 9259</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="https://wa.me/233595699259" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

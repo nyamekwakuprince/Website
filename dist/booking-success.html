@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Booking Confirmed — Lara LuxeStudio</title>
+  <link rel="icon" href="/assets/logo-Co-Xh_kR.png" type="image/png" />
+  <link rel="stylesheet" crossorigin href="/assets/styles-DzEHzinu.css">
+</head>
+<body>
+  <nav class="navbar theme-dark" id="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="index.html" style="display: flex; align-items: center; gap: 10px;">
+          <img src="/assets/logo-Co-Xh_kR.png" alt="Lara LuxeStudio Logo" class="logo-img" />
+          <div class="logo-text">
+            <span class="logo-name">LARA</span>
+            <span class="logo-studio">LUXESTUDIO</span>
+          </div>
+        </a>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <a href="booking.html" class="btn-book-nav">Book Session</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <div class="container" style="max-width: 900px;">
+      <section class="page-card page-card--center confirmation-card" aria-labelledby="confirmation-heading">
+        <img src="/assets/logo-Co-Xh_kR.png" alt="Lara LuxeStudio" style="height:64px; margin:0 auto 16px;" />
+        <h1 id="confirmation-heading" style="margin-bottom:8px;">Booking Successful</h1>
+        <p class="lead" style="color:var(--text-muted); margin-bottom:24px;">Thank you — your appointment is reserved. A confirmation email will be sent shortly.</p>
+
+        <div id="details" style="margin: 0 auto 24px;">
+          <dl class="confirmation-details">
+            <dt><strong>Name</strong></dt><dd id="d-name">—</dd>
+            <dt><strong>Service</strong></dt><dd id="d-service">—</dd>
+            <dt><strong>Date</strong></dt><dd id="d-date">—</dd>
+            <dt><strong>Time</strong></dt><dd id="d-time">—</dd>
+            <dt><strong>Duration</strong></dt><dd id="d-duration">—</dd>
+            <dt><strong>Reference</strong></dt><dd id="d-ref">—</dd>
+          </dl>
+        </div>
+
+        <div class="page-actions">
+          <a href="index.html" class="btn-outline">Return Home</a>
+          <a href="booking.html" id="bookAnother" class="btn-primary">Book Another Appointment</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="/assets/logo-Co-Xh_kR.png" alt="Lara LuxeStudio Logo" class="logo-img" style="height: 32px;" />
+          <div class="logo-text">
+            <span class="logo-name">LARA</span>
+            <span class="logo-studio">LUXESTUDIO</span>
+          </div>
+        </div>
+        <p class="footer-tagline">Where Beauty Meets Luxury ✦</p>
+        <nav class="footer-links" aria-label="Footer Quick Links">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Lara LuxeStudio. All rights reserved.</p>
+        <a href="tel:+233595699259" class="footer-phone" aria-label="Call us">+233 59 569 9259</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Read transient booking info and render, then clear the temp state
+    (function(){
+      try {
+        const raw = sessionStorage.getItem('latest_booking');
+        if (!raw) return;
+        const b = JSON.parse(raw);
+        document.getElementById('d-name').textContent = b.customer_name || '—';
+        document.getElementById('d-service').textContent = b.service || '—';
+        document.getElementById('d-date').textContent = b.date || '—';
+        document.getElementById('d-time').textContent = b.time || '—';
+        document.getElementById('d-duration').textContent = (b.duration_minutes ? b.duration_minutes + ' minutes' : '—');
+        document.getElementById('d-ref').textContent = b.id ?? '—';
+      } catch(e) {
+        // ignore
+      } finally {
+        // clear transient state
+        try { sessionStorage.removeItem('latest_booking'); } catch(e){}
+        try { localStorage.removeItem('laraluxe_selected_service'); } catch(e){}
+      }
+    })();
+  </script>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

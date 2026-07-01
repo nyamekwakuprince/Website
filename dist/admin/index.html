@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Lara LuxeStudio</title>
+  <link rel="icon" href="/assets/logo-Co-Xh_kR.png" type="image/png" />
+  <style>
+    body { background-color: #f9f9f9; }
+    .admin-container {
+      max-width: 1200px;
+      margin: 100px auto 50px auto;
+      padding: 0 20px;
+    }
+    #adminLoginSection {
+      max-width: 400px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .login-actions { display:flex; gap:12px; align-items:center; }
+    .login-error { color: #d9534f; font-size: 14px; margin-bottom: 10px; display: none; }
+    .login-spinner { width:18px; height:18px; border-radius:50%; border:2px solid rgba(0,0,0,0.08); border-top-color:var(--purple); animation:spin .9s linear infinite; display:inline-block; vertical-align:middle; margin-left:8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .login-help { font-size:13px; color:var(--muted); margin-top:8px; }
+    #adminLoginSection h2 { font-family: 'Playfair Display', serif; color: var(--purple-dark); margin-bottom: 20px;}
+    .login-input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+    .login-error { color: #d9534f; font-size: 14px; margin-bottom: 10px; display: none; }
+    #adminDashboardSection {
+      display: none;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+    }
+    .dashboard-header h2 { font-family: 'Playfair Display', serif; color: var(--purple-dark); }
+    .table-responsive { overflow-x: auto; }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+    }
+    .admin-table th, .admin-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    .admin-table th {
+      background-color: #fcf6fc;
+      color: #333;
+      font-weight: 600;
+    }
+    .admin-table tbody tr:hover { background-color: #f9f9f9; }
+    .badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .btn-logout {
+      background-color: #f5f5f5;
+      color: #333;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.3s;
+    }
+    .btn-logout:hover { background-color: #e0e0e0; }
+  </style>
+  <script type="module" crossorigin src="/assets/admin-CfuY6UMg.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/supabase-s9sHuk0X.js">
+  <link rel="stylesheet" crossorigin href="/assets/styles-DzEHzinu.css">
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar theme-dark" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+          <img src="/assets/logo-Co-Xh_kR.png" alt="Lara LuxeStudio Logo" class="logo-img" />
+          <div class="logo-text">
+            <span class="logo-name">LARA</span>
+            <span class="logo-studio">LUXESTUDIO</span>
+          </div>
+        </a>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="nav-link">Dashboard</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="business-hours.html" class="nav-link">Business Hours</a></li>
+        <li><a href="blocked-dates.html" class="nav-link">Blocked Dates</a></li>
+        <li><a href="settings.html" class="nav-link">Settings</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="admin-container">
+    
+    <!-- Login Form -->
+    <div id="adminLoginSection">
+      <h2>Admin Login</h2>
+      <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Please enter your credentials to access the dashboard.</p>
+        <form id="adminLoginForm" aria-describedby="loginHelp" novalidate>
+          <div id="loginError" class="login-error" role="alert" aria-live="polite"></div>
+          <label for="adminUsername" style="display:none">Email</label>
+          <input type="email" id="adminUsername" class="login-input" placeholder="Email address" autocomplete="username" required />
+          <label for="adminPassword" style="display:none">Password</label>
+          <input type="password" id="adminPassword" class="login-input" placeholder="Password" autocomplete="current-password" required />
+          <div class="login-actions">
+            <button type="submit" class="btn-primary" style="flex:1; border-radius:8px; padding:12px 16px;">Sign in</button>
+            <div id="loginSpinner" class="login-spinner" style="display:none" aria-hidden="true"></div>
+          </div>
+          <div id="loginHelp" class="login-help">Use your administrator email and password to access the dashboard.</div>
+        </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="adminDashboardSection">
+      <div class="dashboard-header">
+          <h2>Booked Sessions</h2>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <select id="statusFilter" aria-label="Filter by status" style="padding:8px;border-radius:8px;border:1px solid #e6d7ef;background:#fff;">
+              <option value="all">All statuses</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <input id="searchInput" type="search" placeholder="Search by customer name" style="padding:8px;border-radius:8px;border:1px solid #eee;" aria-label="Search bookings" />
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+          </div>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Customer</th>
+              <th>Service</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Notes</th>
+              <th>Status</th>
+              <th>Booked On</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTableBody">
+            <tr><td colspan="9" style="text-align: center;">Loading bookings...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
