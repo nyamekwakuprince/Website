@@ -1,0 +1,21 @@
+{
+  "name": "Lara LuxeStudio",
+  "short_name": "LaraLuxe",
+  "description": "Premium Hair Studio - Wig Installation, Revamping, and Styling",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6B1A6E",
+  "icons": [
+    {
+      "src": "/assets/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

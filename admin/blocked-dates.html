@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Blocked Dates — Admin | Lara LuxeStudio</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="../assets/images/logo.png" type="image/png" />
+  <style>
+    body { background:#f9f9f9; }
+    .admin-container { max-width:1100px; margin:80px auto; padding:0 20px; }
+    .card { background:#fff; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.06); padding:24px; }
+    .section-title { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
+    .toolbar { display:flex; gap:12px; flex-wrap:wrap; }
+    .toolbar input, .toolbar button { padding:10px 14px; border-radius:12px; border:1px solid #e8e2f0; }
+    .toolbar button { border:none; background:var(--purple); color:white; cursor:pointer; }
+    .table-responsive { overflow-x:auto; }
+    table.admin-table { width:100%; border-collapse:collapse; }
+    table.admin-table th, table.admin-table td { padding:14px 12px; border-bottom:1px solid #f1edf6; }
+    table.admin-table th { background:#faf3ff; color:#333; font-weight:600; }
+    .badge { padding:4px 10px; border-radius:999px; font-size:12px; background:#f4f0fb; color:#5f2d75; }
+    .action-button { color:var(--purple); background:transparent; border:none; cursor:pointer; font-weight:600; }
+    @media (max-width: 860px) {
+      .toolbar { flex-direction:column; align-items:stretch; }
+      .toolbar input { width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar theme-dark" id="navbar" role="navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="../index.html" style="display:flex;align-items:center;gap:10px;">
+          <img src="../assets/images/logo.png" alt="logo" class="logo-img" />
+          <div class="logo-text"><span class="logo-name">LARA</span><span class="logo-studio">LUXESTUDIO</span></div>
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="admin-container">
+    <div class="card">
+      <div class="section-title">
+        <div>
+          <h2>Blocked Dates</h2>
+          <p style="margin:4px 0 0;color:#666;">Add or remove blocked dates and provide a reason for blocked availability.</p>
+        </div>
+        <div class="toolbar">
+          <input id="blockedDateInput" type="date" aria-label="Blocked date" />
+          <input id="blockedReasonInput" type="text" placeholder="Reason" aria-label="Blocked date reason" />
+          <button id="addBlockedDateBtn" type="button">Add Blocked Date</button>
+          <a href="index.html" class="btn-ghost" style="border:1px solid #ddd; background:#fff; color:#333;">Back to Dashboard</a>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="blockedDatesTableBody">
+            <tr><td colspan="4" style="text-align:center;padding:24px;color:#888;">Loading blocked dates…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="src/admin-blocked-dates.ts"></script>
+</body>
+</html>

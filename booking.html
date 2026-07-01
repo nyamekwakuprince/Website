@@ -55,7 +55,7 @@
       <div class="container">
         <div class="booking-form-wrapper reveal" style="max-width: 700px; margin: 0 auto;">
           <div class="booking-form-container">
-            <form class="booking-form" id="bookingForm" novalidate>
+            <form class="booking-form" id="bookingForm" novalidate onsubmit="return false;">
               <h3 class="form-title">Appointment Details</h3>
               
               <div class="form-row">
@@ -76,46 +76,79 @@
                 <input type="email" id="clientEmail" name="clientEmail" placeholder="your@email.com" required aria-describedby="emailError" />
                 <span class="field-error" id="emailError"></span>
               </div>
-              
+
               <div class="form-group">
-                <label for="serviceType">Select Service *</label>
-                <div class="select-wrapper">
-                  <select id="serviceType" name="serviceType" required aria-describedby="serviceError">
+                <label for="clientNotes">Notes (optional)</label>
+                <textarea id="clientNotes" name="clientNotes" placeholder="Tell us about your hairstyle preference or questions..." aria-describedby="notesHelp"></textarea>
+                <span class="field-help" id="notesHelp">Optional details help us prepare your session.</span>
+              </div>
+
+              <div class="form-group service-selection-group">
+                <label>Select Service *</label>
+                <div class="service-selection" id="serviceSelection" aria-live="polite">
+                  <div class="service-selection-header">
+                    <p class="service-selection-title">Choose the service that suits your look.</p>
+                    <p class="service-selection-note">Only active services from our online booking system are shown. Select one to continue.</p>
+                  </div>
+                  <div class="service-grid" id="serviceGrid"></div>
+                  <div class="service-feedback" id="serviceFeedback" role="status" aria-live="polite"></div>
+                </div>
+                <div class="hidden-service-select" aria-hidden="true">
+                  <select id="serviceType" name="serviceType" required>
                     <option value="" disabled selected>Choose a service...</option>
-                    <option value="Installation">Wig Installation</option>
-                    <option value="Revamping">Wig Revamping</option>
-                    <option value="Curling">Hair Curling</option>
-                    <option value="Straightening">Hair Straightening</option>
-                    <option value="Styling">Custom Styling</option>
+                  </select>
+                  <input type="hidden" id="selectedServiceId" name="selectedServiceId" />
+                  <input type="hidden" id="selectedServiceName" name="selectedServiceName" />
+                  <input type="hidden" id="bookingDate" name="bookingDate" />
+                  <select id="bookingTime" name="bookingTime" required>
+                    <option value="" disabled selected>Select time...</option>
                   </select>
                 </div>
                 <span class="field-error" id="serviceError"></span>
               </div>
-              
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="bookingDate">Preferred Date *</label>
-                  <input type="date" id="bookingDate" name="bookingDate" required aria-describedby="dateError" />
-                  <span class="field-error" id="dateError"></span>
+
+              <div class="booking-calendar-group reveal" id="bookingCalendarSection">
+                <label>Choose a date *</label>
+                <div class="booking-calendar" id="bookingCalendar">
+                  <div class="calendar-instructions">Select your service first to reveal available booking dates.</div>
+                  <div class="calendar-days" id="calendarDays" aria-live="polite"></div>
                 </div>
-                <div class="form-group">
-                  <label for="bookingTime">Preferred Time *</label>
-                  <div class="select-wrapper">
-                    <select id="bookingTime" name="bookingTime" required aria-describedby="timeError">
-                      <option value="" disabled selected>Select time...</option>
-                      <option value="08:00 AM">08:00 AM</option>
-                      <option value="09:00 AM">09:00 AM</option>
-                      <option value="10:00 AM">10:00 AM</option>
-                      <option value="11:00 AM">11:00 AM</option>
-                      <option value="12:00 PM">12:00 PM</option>
-                      <option value="01:00 PM">01:00 PM</option>
-                      <option value="02:00 PM">02:00 PM</option>
-                      <option value="03:00 PM">03:00 PM</option>
-                      <option value="04:00 PM">04:00 PM</option>
-                    </select>
-                  </div>
-                  <span class="field-error" id="timeError"></span>
+                <span class="field-error" id="dateError"></span>
+              </div>
+
+              <div class="booking-slots-group reveal">
+                <label>Select time slot *</label>
+                <div class="slot-grid" id="slotGrid"></div>
+                <span class="field-error" id="timeError"></span>
+              </div>
+
+              <div class="booking-summary" id="bookingSummary">
+                <h4>Booking Summary</h4>
+                <div class="summary-item">
+                  <span class="summary-item-label">Service</span>
+                  <span class="summary-item-value" id="summaryService">Not selected</span>
                 </div>
+                <div class="summary-item">
+                  <span class="summary-item-label">Date</span>
+                  <span class="summary-item-value" id="summaryDate">Not selected</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-item-label">Time</span>
+                  <span class="summary-item-value" id="summaryTime">Not selected</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-item-label">Duration</span>
+                  <span class="summary-item-value" id="summaryDuration">—</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-item-label">Price</span>
+                  <span class="summary-item-value" id="summaryPrice">—</span>
+                </div>
+                <div class="summary-actions">
+                  <button type="button" class="summary-action-btn" id="editServiceBtn">Edit service</button>
+                  <button type="button" class="summary-action-btn" id="editDateTimeBtn">Edit date/time</button>
+                </div>
+                <p class="summary-note">You can still edit service, date, or time selections before the final booking step.</p>
               </div>
 
              <div class="form-commitment">
@@ -133,9 +166,9 @@
                </div>
              </div>
               
-              <button type="submit" class="btn-submit" id="submitBtn">
-                <span class="btn-text">Confirm & Book Session</span>
-                <span class="btn-loader" id="btnLoader">⟳</span>
+              <button type="button" class="btn-submit" id="submitBtn">
+                <span class="btn-text">Review Booking</span>
+                <span class="btn-loader" aria-hidden="true"></span>
               </button>
             </form>
           </div>
@@ -197,6 +230,6 @@
 <!-- Paystack and jsPDF libraries -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="assets/js/script.js"></script>
+  <script type="module" src="src/booking.ts"></script>
   </body>
 </html>

@@ -4,11 +4,19 @@
   "description": "Premium Hair Studio Booking Website",
   "private": true,
   "scripts": {
-    "dev": "npx live-server --port=3000",
+    "dev": "vite",
     "lint": "npx eslint assets/js/*.js",
-    "preview": "npx http-server -p 8000"
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "build": "vite build"
   },
-  "devDependencies": {},
+  "dependencies": {
+    "@supabase/supabase-js": "^2.35.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vite": "^5.4.1"
+  },
   "author": "Lara LuxeStudio",
   "license": "MIT"
 }
